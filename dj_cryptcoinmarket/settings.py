@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'coins',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'dj_cryptcoinmarket.wsgi.application'
+ASGI_APPLICATION = 'dj_cryptcoinmarket.asgi.application'
 
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -83,6 +86,15 @@ DATABASES = {
     }
 }
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)]
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
